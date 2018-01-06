@@ -6,6 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class TrelloDto {
-    private String board;
-    private String card;
+    private int board;
+    private int card;
 }
