@@ -79,6 +79,7 @@ public class TrelloClientTest {
                 "http://test.com",
                 new BadgesDto(0, new AttachmentsByTypeDto(new TrelloDto(0,0)))
         );
+        
         when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
 
         //When
@@ -93,9 +94,6 @@ public class TrelloClientTest {
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException {
         //Given
-        TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
-        trelloBoards[0] = new TrelloBoardDto("test_board", "test_id", new ArrayList<>());
-
         URI uri = new URI("http://test.com/members/test_username/boards?key=test&token=test&fields=name,id&lists=all");
 
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);

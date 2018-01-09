@@ -5,7 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+/*@NamedQuery(
+        name = "Task.findTasksByFirstThreeLetters",
+        query = "FROM Task WHERE SUBSTRING(title, 1, 3) = :threeLetters"
+)*/
+@NamedNativeQuery(
+        name = "Task.findTasksByFirstThreeLetters",
+        query = "SELECT * FROM tasks WHERE SUBSTRING(name, 1, 3) = :threeLetters ",
+        resultClass = Task.class
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -30,6 +30,11 @@ public class TaskController {
         return taskMapper.mapToTaskDto(service.getTask(taskId).orElseThrow(TaskNotFoundException::new));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "findTasks")
+    public List<TaskDto> findTasks(@RequestParam String firstThreeLetters) {
+        return taskMapper.mapToTaskDtoList(service.findTasks(firstThreeLetters));
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
     public void deleteTask(@RequestParam Long taskId) {
         service.deleteTask(taskId);
