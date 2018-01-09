@@ -31,8 +31,8 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "findTasks")
-    public List<TaskDto> findTasks(@RequestParam String firstThreeLetters) {
-        return taskMapper.mapToTaskDtoList(service.findTasks(firstThreeLetters));
+    public List<TaskDto> findTasks(@RequestParam String beginLetters) {
+        return taskMapper.mapToTaskDtoList(service.findTasks(beginLetters));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")

@@ -25,5 +25,5 @@ public interface TaskRepository extends CrudRepository<Task, Long>{
     void deleteById(Long id);
 
     @Query
-    List<Task> findTasksByFirstThreeLetters(@Param("threeLetters") String threeLetters);
+    List<Task> findTasksByFirstThreeLetters(@Param("beginLetters") String beginLetters);
 }

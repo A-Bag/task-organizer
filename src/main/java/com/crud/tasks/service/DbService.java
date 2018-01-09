@@ -21,8 +21,8 @@ public class DbService {
         return repository.findById(id);
     }
 
-    public List<Task> findTasks(String firstThreeLetters) {
-        return repository.findTasksByFirstThreeLetters(firstThreeLetters);
+    public List<Task> findTasks(String beginLetters) {
+        return repository.findTasksByFirstThreeLetters(beginLetters);
     }
 
     public Task saveTask(final Task task) {

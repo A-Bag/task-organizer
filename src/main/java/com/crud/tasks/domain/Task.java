@@ -11,7 +11,7 @@ import javax.persistence.*;
 )*/
 @NamedNativeQuery(
         name = "Task.findTasksByFirstThreeLetters",
-        query = "SELECT * FROM tasks WHERE SUBSTRING(name, 1, 3) = :threeLetters ",
+        query = "SELECT * FROM tasks WHERE name LIKE CONCAT(:beginLetters, '%')",
         resultClass = Task.class
 )
 @AllArgsConstructor
