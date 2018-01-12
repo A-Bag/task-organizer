@@ -8,7 +8,7 @@ Application is deployed on Heroku server and can be accessed through the followi
 Application enables:
  - Adding, editing, deleting tasks
  - Searching tasks 
- - Adding tasks to Trello web app via Trello API (if you want to test it, please choose 'Public test board' from the drop-down list, push 'Create card' button and  verify added task entering this website: https://trello.com/b/zZHaWJvL/public-test-board)
+ - Adding tasks to Trello web app via Trello API (if you want to test it, please choose 'Public test board' from the drop-down list, push 'Create card' button and verify added task entering link given by your internet browser)
 
 ## Technologies
 
