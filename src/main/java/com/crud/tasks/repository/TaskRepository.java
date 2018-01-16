@@ -26,4 +26,7 @@ public interface TaskRepository extends CrudRepository<Task, Long>{
 
     @Query
     List<Task> findTasksByFirstThreeLetters(@Param("beginLetters") String beginLetters);
+
+    @Override
+    long count();
 }
