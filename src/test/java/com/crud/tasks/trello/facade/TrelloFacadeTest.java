@@ -111,14 +111,18 @@ public class TrelloFacadeTest {
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "test card", "url",
                 new BadgesDto(1, new AttachmentsByTypeDto(new TrelloDto(1,1))));
 
+        CreatedTrelloCardDto expectedCreatedTrelloCardDto =
+                new CreatedTrelloCardDto("1", "test card", "url",
+                        new BadgesDto(1, new AttachmentsByTypeDto(new TrelloDto(1,1))));
+
         when(trelloMapper.mapToCard(trelloCardDto)).thenReturn(trelloCard);
         when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(trelloCardDto);
         when(trelloService.createTrelloCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
 
         //When
-        CreatedTrelloCardDto createdTrelloCardDto1 = trelloFacade.createCard(trelloCardDto);
+        CreatedTrelloCardDto resultCard = trelloFacade.createCard(trelloCardDto);
 
         //Then
-        assertEquals(createdTrelloCardDto, createdTrelloCardDto1);
+        assertEquals(expectedCreatedTrelloCardDto, resultCard);
     }
 }
