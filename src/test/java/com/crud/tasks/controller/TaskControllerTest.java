@@ -26,10 +26,10 @@ import static org.hamcrest.Matchers.is;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -72,16 +72,8 @@ public class TaskControllerTest {
         when(dbService.getTask(anyLong())).thenReturn(Optional.empty());
 
         //When&Then
-        try {
-            mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound());
-        } catch (Exception e) {
-            if (e.getCause() instanceof TaskNotFoundException) {
-                //test passed
-            } else {
-                fail();
-            }
-        }
+        mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -134,5 +126,32 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("test task 1")))
                 .andExpect(jsonPath("$.content", is("test")));
+    }
+
+    @Test
+    public void testDeleteTask() throws Exception {
+        //Given
+        //When&Then
+        mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", "1"))
+                .andExpect(status().isOk());
+        verify(dbService, times(1)).deleteTask(1L);
+    }
+
+    @Test
+    public void testCreateTask() throws Exception {
+        //Given
+        TaskDto requestBodyTaskDto = new TaskDto(1L, "test task 1", "test");
+        Task task = new Task(1L, "test task 1", "test");
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(requestBodyTaskDto);
+        when(taskMapper.mapToTask(requestBodyTaskDto)).thenReturn(task);
+
+        //When&Then
+        mockMvc.perform(post("/v1/task/createTask")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk());
+        verify(dbService, times(1)).saveTask(task);
     }
 }
