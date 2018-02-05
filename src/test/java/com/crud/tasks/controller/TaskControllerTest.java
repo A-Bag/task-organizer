@@ -58,7 +58,7 @@ public class TaskControllerTest {
                 new TaskDto(3L, "test title 3", "test 3"));
 
         when(dbService.getAllTasks()).thenReturn(taskList);
-        when(taskMapper.mapToTaskDtoList(anyList())).thenReturn(taskDtoList);
+        when(taskMapper.mapToTaskDtoList(taskList)).thenReturn(taskDtoList);
 
         //When&Then
         mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
@@ -107,7 +107,8 @@ public class TaskControllerTest {
         when(dbService.findTasks(anyString())).thenReturn(new ArrayList<>());
         //When&Then
         mockMvc.perform(get("/v1/task/findTasks/?beginLetters=abc").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
@@ -119,8 +120,8 @@ public class TaskControllerTest {
         TaskDto requestBodyTaskDto = new TaskDto(1L, "test task 1", "test");
 
         when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
-        when(dbService.saveTask(any(Task.class))).thenReturn(savedTask);
-        when(taskMapper.mapToTaskDto(any(Task.class))).thenReturn(taskDto);
+        when(dbService.saveTask(task)).thenReturn(savedTask);
+        when(taskMapper.mapToTaskDto(savedTask)).thenReturn(taskDto);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(requestBodyTaskDto);
