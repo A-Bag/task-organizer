@@ -1,8 +1,10 @@
 package com.crud.tasks.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class Mail {
     private String mailTo;
     private String subject;

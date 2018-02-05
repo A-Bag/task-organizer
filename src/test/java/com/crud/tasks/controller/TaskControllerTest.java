@@ -73,7 +73,8 @@ public class TaskControllerTest {
 
         //When&Then
         try {
-            mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON));
+            mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
         } catch (Exception e) {
             if (e.getCause() instanceof TaskNotFoundException) {
                 //test passed
@@ -90,7 +91,7 @@ public class TaskControllerTest {
         TaskDto taskDto = new TaskDto(1L, "test task 1", "test");
 
         when(dbService.getTask(anyLong())).thenReturn(Optional.ofNullable(task));
-        when(taskMapper.mapToTaskDto(any())).thenReturn(taskDto);
+        when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
 
         //When&Then
         mockMvc.perform(get("/v1/task/getTask?taskId=1").contentType(MediaType.APPLICATION_JSON))

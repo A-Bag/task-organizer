@@ -53,8 +53,8 @@ public class TrelloFacadeTest {
 
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
-        when(trelloMapper.mapToBoardsDto(anyList())).thenReturn(new ArrayList<>());
         when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(new ArrayList<>());
+        when(trelloMapper.mapToBoardsDto(new ArrayList<>())).thenReturn(new ArrayList<>());
 
         //When
         List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
@@ -81,8 +81,8 @@ public class TrelloFacadeTest {
 
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
-        when(trelloMapper.mapToBoardsDto(anyList())).thenReturn(trelloBoards);
         when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(mappedTrelloBoards);
+        when(trelloMapper.mapToBoardsDto(mappedTrelloBoards)).thenReturn(trelloBoards);
 
         //When
         List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
