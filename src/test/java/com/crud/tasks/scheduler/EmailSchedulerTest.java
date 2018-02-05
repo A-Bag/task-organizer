@@ -20,11 +20,11 @@ public class EmailSchedulerTest {
     @InjectMocks
     private EmailScheduler emailScheduler;
 
-    @MockBean
+    @Mock
     private SimpleEmailService simpleEmailService;
-    @MockBean
+    @Mock
     private TaskRepository taskRepository;
-    @MockBean
+    @Mock
     private AdminConfig adminConfig;
 
     @Test
@@ -38,9 +38,11 @@ public class EmailSchedulerTest {
 
         //Then
         verify(simpleEmailService, times(1)).
-                send(argThat(
-                        new MailMatcher(
-                                new Mail("mail@mail.com", "", ""))));
+                send(argThat(new MailMatcher(
+                        new Mail(
+                                "mail@mail.com",
+                                "Tasks: Once a day email",
+                                "Currently in database you got: 5 tasks"))));
     }
 
     private class MailMatcher implements ArgumentMatcher<Mail> {
@@ -52,7 +54,9 @@ public class EmailSchedulerTest {
 
         @Override
         public boolean matches(Mail mail) {
-            return mail.getMailTo().equals(expected.getMailTo());
+            return mail.getMailTo().equals(expected.getMailTo())
+                    && mail.getSubject().equals(expected.getSubject())
+                    && mail.getMessage().equals(expected.getMessage());
         }
     }
 }
