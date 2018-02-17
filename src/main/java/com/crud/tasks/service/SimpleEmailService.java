@@ -44,6 +44,9 @@ public class SimpleEmailService {
             } else if (mail.getSubject().contains("day")) {
                 messageHelper.setText(mailCreatorService.buildDailyInfoEmail(mail.getMessage()), true);
             }
+            if (mail.getToCc().length > 0) {
+                messageHelper.setCc(mail.getToCc());
+            }
         };
     }
 
