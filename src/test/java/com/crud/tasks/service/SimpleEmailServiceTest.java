@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.MailType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -39,7 +40,7 @@ public class SimpleEmailServiceTest {
         };
 
         //When
-        simpleEmailService.send(mail);
+        simpleEmailService.send(mail, MailType.NEW_TRELLO_CARD_INFO);
 
         //Then
         Mockito.verify(javaMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
@@ -52,7 +53,7 @@ public class SimpleEmailServiceTest {
                 "test1@test.com", "test2@test.com");
 
         //When
-        simpleEmailService.send(mail);
+        simpleEmailService.send(mail, MailType.NEW_TRELLO_CARD_INFO);
 
         //Then
         Mockito.verify(javaMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));

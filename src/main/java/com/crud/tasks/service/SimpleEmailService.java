@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.MailType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +24,22 @@ public class SimpleEmailService {
     @Autowired
     private MailCreatorService mailCreatorService;
 
-    public void send(final Mail mail) {
+    public void send(final Mail mail, MailType mailType) {
         LOGGER.info("Starting email preparation...");
         try {
-            //SimpleMailMessage mailMessage = createMailMessage(mail);
-            javaMailSender.send(createMimeMessage(mail));
+            javaMailSender.send(createMimeMessage(mail, mailType));
             LOGGER.info("Email has been sent.");
         } catch (MailException e) {
             LOGGER.error("Failed to process email sending: ", e.getMessage(), e);
         }
     }
 
-    private MimeMessagePreparator createMimeMessage(final Mail mail) {
+    private MimeMessagePreparator createMimeMessage(final Mail mail, MailType mailType) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
-            if (mail.getSubject().contains("Trello")) {
-                messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
-            } else if (mail.getSubject().contains("day")) {
-                messageHelper.setText(mailCreatorService.buildDailyInfoEmail(mail.getMessage()), true);
-            }
+            messageHelper.setText(mailCreatorService.buildEmail(mail.getMessage(), mailType), true);
             if (mail.getToCc().length > 0) {
                 messageHelper.setCc(mail.getToCc());
             }

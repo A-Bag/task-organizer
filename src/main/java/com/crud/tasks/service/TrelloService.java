@@ -2,6 +2,7 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.MailType;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.domain.created.trello.card.CreatedTrelloCardDto;
@@ -19,7 +20,7 @@ public class TrelloService {
     private TrelloClient trelloClient;
 
     @Autowired
-    private SimpleEmailService emailService;
+    private SimpleEmailService simpleEmailService;
 
     @Autowired
     private AdminConfig adminConfig;
@@ -32,8 +33,10 @@ public class TrelloService {
 
     public CreatedTrelloCardDto createTrelloCard(final TrelloCardDto trelloCardDto) {
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
-        Optional.ofNullable(newCard).ifPresent(card -> emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
-                "New card: " + newCard.getName() + " has been created on your Trello account")));
+        Optional.ofNullable(newCard).ifPresent(card -> simpleEmailService.send(
+                new Mail(adminConfig.getAdminMail(), SUBJECT, "New card: " +
+                        newCard.getName() + " has been created on your Trello account"),
+                MailType.NEW_TRELLO_CARD_INFO));
         return newCard;
     }
 }

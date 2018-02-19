@@ -2,6 +2,7 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.config.CompanyConfig;
+import com.crud.tasks.domain.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,17 @@ public class MailCreatorService {
             "You can manage your tasks",
             "Provides connection with Trello Account",
             "Application allows sending tasks to Trello");
+
+    public String buildEmail(String message, MailType mailType) {
+        switch(mailType) {
+            case DAILY_INFO:
+                return buildDailyInfoEmail(message);
+            case NEW_TRELLO_CARD_INFO:
+                return buildTrelloCardEmail(message);
+            default:
+                return null;
+        }
+    }
 
     public String buildTrelloCardEmail(String message) {
 

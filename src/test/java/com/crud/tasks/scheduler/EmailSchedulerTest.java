@@ -2,6 +2,7 @@ package com.crud.tasks.scheduler;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.MailType;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.SimpleEmailService;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class EmailSchedulerTest {
                         new Mail(
                                 "mail@mail.com",
                                 "Tasks: Once a day email",
-                                "Currently in database you got: 5 tasks"))));
+                                "Currently in database you got: 5 tasks"))), eq(MailType.DAILY_INFO));
     }
 
     private class MailMatcher implements ArgumentMatcher<Mail> {
