@@ -5,12 +5,10 @@ import com.crud.tasks.config.CompanyConfig;
 import com.crud.tasks.domain.MailType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,11 +37,11 @@ public class MailCreatorService {
             case NEW_TRELLO_CARD_INFO:
                 return buildTrelloCardEmail(message);
             default:
-                return null;
+                return message;
         }
     }
 
-    public String buildTrelloCardEmail(String message) {
+    private String buildTrelloCardEmail(String message) {
 
         Context context = new Context();
         context.setVariable("message", message);
@@ -59,7 +57,7 @@ public class MailCreatorService {
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
 
-    public String buildDailyInfoEmail(String message) {
+    private String buildDailyInfoEmail(String message) {
         Context context = new Context();
         context.setVariable("message", message);
         context.setVariable("tasks_url", "https://a-bag.github.io/");

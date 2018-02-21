@@ -6,18 +6,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+
 import static org.mockito.ArgumentMatchers.*;
-
-import javax.mail.internet.MimeMessage;
-
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SimpleEmailServiceTest {
@@ -26,6 +22,9 @@ public class SimpleEmailServiceTest {
 
     @Mock
     private JavaMailSender javaMailSender;
+
+    @Mock
+    private MailCreatorService mailCreatorService;
 
     @Test
     public void shouldSendEmail() {
@@ -43,7 +42,7 @@ public class SimpleEmailServiceTest {
         simpleEmailService.send(mail, MailType.NEW_TRELLO_CARD_INFO);
 
         //Then
-        Mockito.verify(javaMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
+        verify(javaMailSender, times(1)).send(any(MimeMessagePreparator.class));
     }
 
     @Test
@@ -56,6 +55,6 @@ public class SimpleEmailServiceTest {
         simpleEmailService.send(mail, MailType.NEW_TRELLO_CARD_INFO);
 
         //Then
-        Mockito.verify(javaMailSender, Mockito.times(1)).send(any(MimeMessagePreparator.class));
+        verify(javaMailSender, times(1)).send(any(MimeMessagePreparator.class));
     }
 }
