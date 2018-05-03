@@ -9,6 +9,7 @@ Application enables:
  - Adding, editing, deleting tasks
  - Searching tasks 
  - Adding tasks to Trello web app via Trello API (if you want to test it, please choose 'Public test board' from the drop-down list, push 'Create card' button and verify added task entering link given by your internet browser)
+ - Automatic sending notification e-mails after adding tasks to Trello
 
 ## Technologies
 
@@ -17,5 +18,7 @@ Application enables:
  - Junit, Mockito
  - Gradle
  - MySQL/PostgreSQL
+ - Swagger API Documentation
+ - Thymeleaf (for e-mail templates) 
  - Front-end: HTML, CSS, JavaScript (AJAX, JQuery)
 
