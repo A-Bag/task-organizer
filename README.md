@@ -3,7 +3,7 @@
 ## Description
 CRUD application powered by Spring Framework and MySQL/PostgreSQL.
 
-Application is deployed on Heroku server and can be accessed through the following front-end web page (please wait about 60s until application wakes up on Heroku server): https://a-bag.github.io/
+Application is deployed on Heroku server and can be accessed through the following front-end web page (please wait about 60s until application wakes up on Heroku server): https://a-bag.github.io/task-organizer.github.io/
 
 Application enables:
  - Adding, editing, deleting tasks
